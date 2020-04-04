@@ -12,8 +12,9 @@ import java.util.ArrayList;
 public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
     /**
      * Constructeur.
+     * @param c Le connecteur
      */
-    public PersonnelDaoJDBC(Connection c) {
+    public PersonnelDaoJDBC(final Connection c) {
         super(c);
     }
     /**
@@ -27,23 +28,26 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
         LocalDate date;
         Personnel p = null;
         try {
-            PreparedStatement prepare = connect.prepareStatement("SELECT * FROM personnels WHERE id = ?");
+            final int un = 1;
+            final int suppr = 1900;
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT * FROM personnels WHERE id = ?");
             prepare.setInt(1, id);
             ResultSet result = prepare.executeQuery();
             if (result.first()) {
                 date = LocalDate.of(
-                        result.getDate(4).getYear() + 1900,
-                        result.getDate(4).getMonth() + 1,
-                        result.getDate(4).getDay());
+                        result.getDate("dateNaissance").getYear() + suppr,
+                        result.getDate("dateNaissance").getMonth() + un,
+                        result.getDate("dateNaissance").getDay());
                 p = new Personnel.Builder(
                         result.getString("nom"),
                         result.getString("prenom"),
                         date,
-                        (ArrayList<String>) result.getArray(5)
+                        (ArrayList<String>) result.getArray("numTel")
                         ).build();
                 p.setId(id);
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return p;
@@ -56,21 +60,28 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
     @SuppressWarnings("deprecation")
     public Personnel create(final Personnel pers) {
         try {
+            final int un = 1;
+            final int deux = 2;
+            final int trois = 3;
+            final int quatre = 4;
+            final int cinq = 5;
+            final int suppr = 1900;
             PreparedStatement prepare = connect.prepareStatement(
-                    "INSERT INTO personnels (id,nom,prenom,dateNaissance,numTel)"
+                    "INSERT INTO personnels (id,nom,prenom,"
+                    + "dateNaissance,numTel)"
                     + "VALUES (?,?,?,?,?)");
-            prepare.setInt(1, pers.getId());
-            prepare.setString(2, pers.getNom());
-            prepare.setString(3, pers.getPrenom());
+            prepare.setInt(un, pers.getId());
+            prepare.setString(deux, pers.getNom());
+            prepare.setString(trois, pers.getPrenom());
             Date date = new Date(
-                    pers.getDateNaissance().getYear() - 1900,
-                    pers.getDateNaissance().getMonthValue() - 1,
+                    pers.getDateNaissance().getYear() - suppr,
+                    pers.getDateNaissance().getMonthValue() - un,
                     pers.getDateNaissance().getDayOfMonth());
-            prepare.setDate(4, date);
-            prepare.setArray(5, (Array) pers.getNumTel());
+            prepare.setDate(quatre, date);
+            prepare.setArray(cinq, (Array) pers.getNumTel());
             int result = prepare.executeUpdate();
             assert result == 1;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return pers;
@@ -78,26 +89,31 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
     /**
      * Modifie un membre du personnel.
      * @param pers Le membre a modifier
-     * @param params Le parametre a modifier
      */
     @Override
     @SuppressWarnings({ "deprecation" })
     public Personnel update(final Personnel pers) {
         try {
+            final int un = 1;
+            final int deux = 2;
+            final int trois = 3;
+            final int quatre = 4;
+            final int cinq = 5;
+            final int suppr = 1900;
             PreparedStatement prepare = connect.prepareStatement(
                     "UPDATE personnes SET nom = ?, prenom = ?,"
                     + "dateNaissance = ?, numTel = ? WHERE id = ?");
-	        prepare.setString(1, pers.getNom());
-	        prepare.setString(2, pers.getPrenom());
-	        Date date = new Date(
-	                pers.getDateNaissance().getYear() - 1900,
-	                pers.getDateNaissance().getMonthValue() - 1,
-	                pers.getDateNaissance().getDayOfMonth());
-	        prepare.setDate(3, date);
-	    	prepare.setArray(4, (Array) pers.getNumTel());
-	        prepare.setInt(5, pers.getId());
-	        int result = prepare.executeUpdate();
-	        assert result == 1;
+            prepare.setString(un, pers.getNom());
+            prepare.setString(deux, pers.getPrenom());
+            Date date = new Date(
+                    pers.getDateNaissance().getYear() - suppr,
+                    pers.getDateNaissance().getMonthValue() - un,
+                    pers.getDateNaissance().getDayOfMonth());
+            prepare.setDate(trois, date);
+            prepare.setArray(quatre, (Array) pers.getNumTel());
+            prepare.setInt(cinq, pers.getId());
+            int result = prepare.executeUpdate();
+            assert result == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,7 +130,7 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
                     "DELETE FROM personnels WHERE id = ?");
             prepare.setInt(1,  pers.getId());
             int result = prepare.executeUpdate();
-	        assert result == 1;
+            assert result == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -11,8 +11,9 @@ public class CompositePersonnelDaoJDBC
 extends AbstractDao<CompositePersonnel> {
     /**
      * Constructeur.
+     * @param c Le connecteur
      */
-    public CompositePersonnelDaoJDBC(Connection c) {
+    public CompositePersonnelDaoJDBC(final Connection c) {
         super(c);
     }
     /**
@@ -25,19 +26,20 @@ extends AbstractDao<CompositePersonnel> {
     public CompositePersonnel find(final int id) {
         CompositePersonnel cp = null;
         try {
-            PreparedStatement prepare = connect.prepareStatement("SELECT * FROM compositePersonnels WHERE id = ?");
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT * FROM compositePersonnels WHERE id = ?");
             prepare.setInt(1, id);
             ResultSet result = prepare.executeQuery();
             if (result.first()) {
                 cp = new CompositePersonnel();
                 ArrayList<InterfacePersonnel> liste =
                         (ArrayList<InterfacePersonnel>) result.getArray("list");
-                for(InterfacePersonnel ip : liste) {
+                for (InterfacePersonnel ip : liste) {
                     cp.add(ip);
                 }
                 cp.setId(id);
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return cp;
@@ -56,7 +58,7 @@ extends AbstractDao<CompositePersonnel> {
             prepare.setArray(2, (Array) cpers.getList());
             int result = prepare.executeUpdate();
             assert result == 1;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return cpers;

@@ -49,8 +49,9 @@ public final class Personnel implements InterfacePersonnel, Serializable {
     }
     /**
      * Setter de l'identifiant du personnel.
+     * @param i L'identifiant modifié
      */
-    public void setId(int i) {
+    public void setId(final int i) {
         this.id = i;
     }
     /**

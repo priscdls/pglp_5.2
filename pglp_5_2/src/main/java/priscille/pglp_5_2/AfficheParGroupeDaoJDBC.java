@@ -11,40 +11,44 @@ public class AfficheParGroupeDaoJDBC
 extends AbstractDao<AfficheParGroupe> {
     /**
      * Constructeur.
+     * @param c Le connecteur
      */
-    public AfficheParGroupeDaoJDBC(Connection c) {
+    public AfficheParGroupeDaoJDBC(final Connection c) {
         super(c);
     }
     /**
-     * Retourne le personnel recherché.
-     * @param id L'identifiant du personnel
-     * @return Le personnel trouvé
+     * Retourne l'AfficheParGroupe recherché.
+     * @param id L'identifiant de l'AfficheParGroupe
+     * @return L'AfficheParGroupe trouvé
      */
     @Override
     @SuppressWarnings({ "unchecked" })
     public AfficheParGroupe find(final int id) {
-    	AfficheParGroupe apg = null;
+        AfficheParGroupe apg = null;
         try {
-            PreparedStatement prepare = connect.prepareStatement("SELECT * FROM afficheParGroupe WHERE id = ?");
+            PreparedStatement prepare = connect.prepareStatement(
+                    "SELECT * FROM afficheParGroupe WHERE id = ?");
             prepare.setInt(1, id);
             ResultSet result = prepare.executeQuery();
             if (result.first()) {
                 apg = new AfficheParGroupe();
                 ArrayDeque<InterfacePersonnel> file =
-                        (ArrayDeque<InterfacePersonnel>) result.getArray("file");
-                for(InterfacePersonnel ip : file) {
+                        (ArrayDeque<InterfacePersonnel>)
+                        result.getArray("file");
+                for (InterfacePersonnel ip : file) {
                     apg.add(ip);
                 }
                 apg.setId(id);
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return apg;
     }
     /**
-     * Ajoute un membre a la liste du personnel.
-     * @param pers Le membre a ajouter
+     * Ajoute un AfficheParGroupe.
+     * @param apg L'AfficheParGroupe a ajouter
+     * @return L'AfficheParGroupe créé
      */
     @Override
     public AfficheParGroupe create(final AfficheParGroupe apg) {
@@ -56,16 +60,15 @@ extends AbstractDao<AfficheParGroupe> {
             prepare.setArray(2, (Array) apg.getList());
             int result = prepare.executeUpdate();
             assert result == 1;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return apg;
     }
     /**
-     * Modifie un membre du personnel
-     * de la liste.
-     * @param pers Le membre a modifier
-     * @param params Le parametre a modifier
+     * Modifie un AfficheParGroupe.
+     * @param apg L'AfficheParGroupe a modifier
+     * @return L'AfficheParGroupe modifié
      */
     @Override
     @SuppressWarnings({ })
@@ -83,8 +86,8 @@ extends AbstractDao<AfficheParGroupe> {
         return apg;
     }
     /**
-     * Retire un membre de la liste du personnel.
-     * @param pers Le membre a retirer
+     * Retire un AfficheParGroupe.
+     * @param apg L'AfficheParGroupe a retirer
      */
     @Override
     public void delete(final AfficheParGroupe apg) {

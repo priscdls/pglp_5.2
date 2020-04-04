@@ -4,10 +4,9 @@ public class FactoryDao extends AbstractFactoryDao {
     /**
      * Constructeur.
      */
-	public FactoryDao() {
-        
+    public FactoryDao() {
     }
-	/**
+    /**
      * Fabrique Dao pour Personnel.
      * @return un nouveau PersonnelDao
      */

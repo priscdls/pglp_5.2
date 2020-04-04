@@ -3,14 +3,15 @@ package priscille.pglp_5_2;
 import java.sql.Connection;
 
 public class FactoryDaoJDBC extends AbstractFactoryDao {
-	/**
+    /**
      * Constructeur.
+     * @param c Le connecteur
      */
-	@SuppressWarnings("static-access")
-	public FactoryDaoJDBC(Connection c) {
+    @SuppressWarnings("static-access")
+    public FactoryDaoJDBC(final Connection c) {
         super.connect = c;
     }
-	/**
+    /**
      * Fabrique Dao pour Personnel.
      * @return un nouveau PersonnelDao
      */

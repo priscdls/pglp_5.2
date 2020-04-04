@@ -7,34 +7,34 @@ public abstract class AbstractDao<T> {
      * Connecteur.
      */
     protected Connection connect;
-	/**
-	 * Constructeur.
-	 * @param c connecteur modifié
-	 */
-    public AbstractDao(Connection c) {
+    /**
+     * Constructeur.
+     * @param c connecteur modifié
+     */
+    public AbstractDao(final Connection c) {
         connect = c;
     }
     /**
-     * Retourne le personnel recherché.
-     * @param id L'identifiant du personnel
-     * @return Le personnel trouvé
+     * Retourne l'objet recherché.
+     * @param id L'identifiant de l'objet
+     * @return L'objet trouvé
      */
-   public abstract T find(int id);
+    public abstract T find(int id);
     /**
-     * Ajoute un membre a la liste du personnel.
-     * @param t Le membre a ajouter
+     * Ajoute un objet.
+     * @param t L'objet a ajouter
+     * @return L'objet créé
      */
     public abstract T create(T t);
     /**
-     * Modifie un membre du personnel
-     * de la liste.
-     * @param t Le membre a modifier
-     * @param params Le parametre a modifier
+     * Modifie un objet.
+     * @param t L'objet a modifier
+     * @return L'objet modifié
      */
     public abstract T update(T t);
     /**
-     * Retire un membre de la liste du personnel.
-     * @param t Le membre a retirer
+     * Retire un objet.
+     * @param t L'objet a retirer
      */
     public abstract void delete(T t);
 }
