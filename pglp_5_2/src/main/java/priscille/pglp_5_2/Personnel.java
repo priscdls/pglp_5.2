@@ -19,7 +19,7 @@ public final class Personnel implements InterfacePersonnel, Serializable {
     /**
      * Identifiant d'un personnel.
      */
-    private final int id;
+    private int id;
     /**
      * Identifiant du composite suivant.
      */
@@ -46,6 +46,12 @@ public final class Personnel implements InterfacePersonnel, Serializable {
      */
     public int getId() {
         return this.id;
+    }
+    /**
+     * Setter de l'identifiant du personnel.
+     */
+    public void setId(int i) {
+        this.id = i;
     }
     /**
      * Getter de nom.

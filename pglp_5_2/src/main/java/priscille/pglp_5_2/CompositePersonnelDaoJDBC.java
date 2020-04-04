@@ -7,12 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CompositePersonnelDao
-extends Dao<CompositePersonnel> {
+public class CompositePersonnelDaoJDBC
+extends AbstractDao<CompositePersonnel> {
     /**
      * Constructeur.
      */
-    public CompositePersonnelDao(Connection c) {
+    public CompositePersonnelDaoJDBC(Connection c) {
         super(c);
     }
     /**
