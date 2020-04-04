@@ -1,11 +1,14 @@
 package priscille.pglp_5_2;
 
-public class FactoryDao extends AbstractFactoryDao {
-    /**
+import java.sql.Connection;
+
+public class FactoryDaoJDBC extends AbstractFactoryDao {
+	/**
      * Constructeur.
      */
-	public FactoryDao() {
-        
+	@SuppressWarnings("static-access")
+	public FactoryDaoJDBC(Connection c) {
+        super.connect = c;
     }
 	/**
      * Fabrique Dao pour Personnel.
@@ -54,4 +57,5 @@ public class FactoryDao extends AbstractFactoryDao {
             final String deserialize) {
         return  AfficheParGroupeDao.deSerialization(deserialize);
     }
+
 }
