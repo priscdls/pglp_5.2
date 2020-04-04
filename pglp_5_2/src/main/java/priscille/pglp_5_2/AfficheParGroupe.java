@@ -22,7 +22,7 @@ implements Iterable<InterfacePersonnel>, Serializable {
     /**
      * Identifiant d'un AfficheParGroupe.
      */
-    private final int id;
+    private int id;
     /**
      * Identifiant du composite suivant.
      */
@@ -40,6 +40,12 @@ implements Iterable<InterfacePersonnel>, Serializable {
      */
     public final ArrayDeque<InterfacePersonnel> getList() {
         return this.file.clone();
+    }
+    /**
+     * Setter de l'identifiant.
+     */
+    public void setId(int i) {
+        this.id = i;
     }
     /**
      * Constructeur.
