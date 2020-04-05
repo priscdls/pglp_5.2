@@ -15,48 +15,21 @@ public class FactoryDaoJDBC extends AbstractFactoryDao {
      * Fabrique Dao pour Personnel.
      * @return un nouveau PersonnelDao
      */
-    public static Dao<Personnel> getPersonnelDao() {
-        return new PersonnelDao();
+    public static AbstractDao<Personnel> getPersonnelDao() {
+        return new PersonnelDaoJDBC(connect);
     }
     /**
      * Fabrique Dao pour CompositePersonnel.
      * @return un nouveau CompositePersonnelDao
      */
-    public static Dao<CompositePersonnel> getCompositePersonnelDao() {
-        return new CompositePersonnelDao();
+    public static AbstractDao<CompositePersonnel> getCompositePersonnelDao() {
+        return new CompositePersonnelDaoJDBC(connect);
     }
     /**
      * Fabrique Dao pour AfficheParGroupe.
      * @return un nouvel AfficheParGroupeDao
      */
-    public static Dao<AfficheParGroupe> getAfficheParGroupeDao() {
-        return new AfficheParGroupeDao();
+    public static AbstractDao<AfficheParGroupe> getAfficheParGroupeDao() {
+        return new AfficheParGroupeDaoJDBC(connect);
     }
-    /**
-     * Fabrique Dao pour Personnel.
-     * @param deserialize un Personnel déja inseré
-     * @return un nouveau PersonnelDao
-     */
-    public Dao<Personnel> getPersonnelDao(final String deserialize) {
-        return PersonnelDao.deSerialization(deserialize);
-    }
-    /**
-     * Fabrique Dao pour CompositePersonnel.
-     * @param deserialize un CompositePersonnel déja inseré
-     * @return un nouveau CompositePersonnelDao
-     */
-    public Dao<CompositePersonnel> getCompositePersonnelDao(
-            final String deserialize) {
-        return CompositePersonnelDao.deSerialization(deserialize);
-    }
-    /**
-     * Fabrique Dao pour AfficheParGroupe.
-     * @param deserialize un AfficheParGroupe déja inseré
-     * @return un nouveau AfficheParGroupeDao
-     */
-    public Dao<AfficheParGroupe> getAfficheParGroupeDao(
-            final String deserialize) {
-        return  AfficheParGroupeDao.deSerialization(deserialize);
-    }
-
 }
