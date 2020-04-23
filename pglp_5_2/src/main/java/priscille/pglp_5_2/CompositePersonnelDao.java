@@ -109,8 +109,10 @@ implements Dao<CompositePersonnel>, Serializable {
      * Fonction de désérialisation.
      * @param path Adresse du fichier
      * @return Le personnelDao deserialisé
+     * @throws ClassNotFoundException
      */
-    public static CompositePersonnelDao deSerialization(final String path) {
+    public static CompositePersonnelDao deSerialization(final String path)
+            throws ClassNotFoundException {
         ObjectInputStream ois = null;
         CompositePersonnelDao cp = null;
         try {
@@ -118,8 +120,6 @@ implements Dao<CompositePersonnel>, Serializable {
             ois = new ObjectInputStream(fichierIn);
             cp = (CompositePersonnelDao) ois.readObject();
         } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

@@ -55,7 +55,7 @@ public class PersonnelDaoTest {
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdateNom() {
 		PersonnelDao personnels = new PersonnelDao();
 		ArrayList<String> numTel = new ArrayList<String>();
     	numTel.add("0123456789");
@@ -72,7 +72,41 @@ public class PersonnelDaoTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	public void testUpdatePrenom() {
+		PersonnelDao personnels = new PersonnelDao();
+		ArrayList<String> numTel = new ArrayList<String>();
+    	numTel.add("0123456789");
+    	numTel.add("0987654321");
+        Personnel p = new Personnel.Builder("Daoulas", "Priscille", LocalDate.of(1996, 05, 23), numTel).build();
+        personnels.ajouter(p);
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("prenom", "Sophie");
+        personnels.update(p, param);
+        
+        Personnel expected = new Personnel.Builder("Daoulas", "Sophie", LocalDate.of(1996, 05, 23), numTel).build();
+        
+        assertTrue(personnels.getAll().get(0).getPrenom() == expected.getPrenom());
+	}
+	
+	@Test
+	public void testUpdateDateNaissance() {
+		PersonnelDao personnels = new PersonnelDao();
+		ArrayList<String> numTel = new ArrayList<String>();
+    	numTel.add("0123456789");
+    	numTel.add("0987654321");
+        Personnel p = new Personnel.Builder("Daoulas", "Priscille", LocalDate.of(1996, 05, 23), numTel).build();
+        personnels.ajouter(p);
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("dateNaissance", LocalDate.of(2000, 04, 16));
+        personnels.update(p, param);
+        
+        Personnel expected = new Personnel.Builder("Daoulas", "Priscille", LocalDate.of(2000, 04, 16), numTel).build();
+        
+        assertTrue(personnels.getAll().get(0).getPrenom() == expected.getPrenom());
+	}
+	
+	@Test
+	public void testSerialization() throws ClassNotFoundException {
 		PersonnelDao personnels = new PersonnelDao();
 		ArrayList<String> numTel = new ArrayList<String>();
     	numTel.add("0123456789");
@@ -84,5 +118,11 @@ public class PersonnelDaoTest {
         File f = new File("personnel1");
         f.delete();
         assertEquals(personnels.getAll().get(0).toString(),p2.getAll().get(0).toString());
+	}
+	
+	@Test
+	public void testSerializationNull() throws ClassNotFoundException {
+        @SuppressWarnings("unused")
+		PersonnelDao p = PersonnelDao.deSerialization("aaa");
 	}
 }

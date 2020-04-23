@@ -19,7 +19,7 @@ public final class Personnel implements InterfacePersonnel, Serializable {
     /**
      * Identifiant d'un personnel.
      */
-    private int id;
+    private final int id;
     /**
      * Identifiant du composite suivant.
      */
@@ -46,13 +46,6 @@ public final class Personnel implements InterfacePersonnel, Serializable {
      */
     public int getId() {
         return this.id;
-    }
-    /**
-     * Setter de l'identifiant du personnel.
-     * @param i L'identifiant modifié
-     */
-    public void setId(final int i) {
-        this.id = i;
     }
     /**
      * Getter de nom.
@@ -186,8 +179,10 @@ public final class Personnel implements InterfacePersonnel, Serializable {
      * Fonction de désérialisation.
      * @param path Adresse du fichier
      * @return Le personnel deserialisé
+     * @throws ClassNotFoundException
      */
-    public static Personnel deSerialization(final String path) {
+    public static Personnel deSerialization(final String path)
+            throws ClassNotFoundException {
         ObjectInputStream ois = null;
         Personnel p = null;
         try {
@@ -195,8 +190,6 @@ public final class Personnel implements InterfacePersonnel, Serializable {
             ois = new ObjectInputStream(fichierIn);
             p = (Personnel) ois.readObject();
         } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

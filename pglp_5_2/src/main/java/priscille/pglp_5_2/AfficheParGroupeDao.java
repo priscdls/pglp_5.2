@@ -110,8 +110,10 @@ implements Dao<AfficheParGroupe>, Serializable {
      * Fonction de désérialisation.
      * @param path Adresse du fichier
      * @return Le personnelDao deserialisé
+     * @throws ClassNotFoundException
      */
-    public static AfficheParGroupeDao deSerialization(final String path) {
+    public static AfficheParGroupeDao deSerialization(final String path)
+            throws ClassNotFoundException {
         ObjectInputStream ois = null;
         AfficheParGroupeDao apg = null;
         try {
@@ -119,8 +121,6 @@ implements Dao<AfficheParGroupe>, Serializable {
             ois = new ObjectInputStream(fichierIn);
             apg = (AfficheParGroupeDao) ois.readObject();
         } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

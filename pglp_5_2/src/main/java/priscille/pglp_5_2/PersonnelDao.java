@@ -128,8 +128,10 @@ public class PersonnelDao implements Dao<Personnel>, Serializable {
      * Fonction de désérialisation.
      * @param path Adresse du fichier
      * @return Le personnelDao deserialisé
+     * @throws ClassNotFoundException
      */
-    public static PersonnelDao deSerialization(final String path) {
+    public static PersonnelDao deSerialization(final String path)
+            throws ClassNotFoundException {
         ObjectInputStream ois = null;
         PersonnelDao p = null;
         try {
@@ -137,8 +139,6 @@ public class PersonnelDao implements Dao<Personnel>, Serializable {
             ois = new ObjectInputStream(fichierIn);
             p = (PersonnelDao) ois.readObject();
         } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

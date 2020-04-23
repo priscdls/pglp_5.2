@@ -35,6 +35,7 @@ public class AffichageParGroupeTest {
         c2.add(c3);
         c2.add(p2);
         apg.parcoursLargeur(c1);
+        apg.print();
         ArrayList<InterfacePersonnel> listParcoursExacte = new ArrayList<InterfacePersonnel>();
         listParcoursExacte.add(c1);
         listParcoursExacte.add(c2);
@@ -50,9 +51,10 @@ public class AffichageParGroupeTest {
 	}
 	/**
 	 * Test de la serialisation.
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testSerialization() {
+	public void testSerialization() throws ClassNotFoundException {
 		CompositePersonnel c1 = new CompositePersonnel();
     	CompositePersonnel c2 = new CompositePersonnel();
     	CompositePersonnel c3 = new CompositePersonnel();
@@ -76,5 +78,15 @@ public class AffichageParGroupeTest {
         File f = new File("AffGroupe1");
         f.delete();
         assertTrue(apg.toString().equals(apg2.toString()));
+	}
+	
+	/**
+	 * Test de la deserialisation.
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void testDeSerialization() throws ClassNotFoundException {
+		@SuppressWarnings("unused")
+		AfficheParGroupe apg = AfficheParGroupe.deSerialization("aaa");
 	}
 }

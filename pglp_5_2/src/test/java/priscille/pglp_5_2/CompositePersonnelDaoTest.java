@@ -79,7 +79,7 @@ public class CompositePersonnelDaoTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	public void testSerialization() throws ClassNotFoundException {
 		CompositePersonnelDao cpersonnels = new CompositePersonnelDao();
 		CompositePersonnel cp = new CompositePersonnel();
 		ArrayList<String> numTel = new ArrayList<String>();
@@ -96,5 +96,10 @@ public class CompositePersonnelDaoTest {
         
         assertEquals(cpersonnels.getAll().toString(), cp2.getAll().toString());
 	}
-
+	
+	@Test
+	public void testDeSerialization() throws ClassNotFoundException {
+		@SuppressWarnings("unused")
+		CompositePersonnelDao cp = CompositePersonnelDao.deSerialization("aaa");
+	}
 }

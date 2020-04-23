@@ -28,6 +28,7 @@ public class CompositePersonnelTest {
 		Iterator<InterfacePersonnel> it = c1.iterator();
 		Personnel p = new Personnel.Builder("Daoulas","Priscille",java.time.LocalDate.of(1996, 05, 23),null).build();
 		c1.add(p);
+		c1.print();
 		assertTrue(it.hasNext());
 	}
 	/**
@@ -44,9 +45,10 @@ public class CompositePersonnelTest {
 	}
 	/**
 	 * Test de la sérialisation.
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testSerialization() {
+	public void testSerialization() throws ClassNotFoundException {
 		CompositePersonnel cp = new CompositePersonnel();
 		Personnel p = new Personnel.Builder("Daoulas","Priscille",java.time.LocalDate.of(1996, 05, 23),null).build();
 		cp.add(p);
@@ -56,5 +58,10 @@ public class CompositePersonnelTest {
         f.delete();
         assertTrue(cp.toString().equalsIgnoreCase(cp2.toString()));
 	}
-
+	
+	@Test
+	public void testDeSerialization() throws ClassNotFoundException {
+		@SuppressWarnings("unused")
+		CompositePersonnel cp = CompositePersonnel.deSerialization("aaa");
+	}
 }

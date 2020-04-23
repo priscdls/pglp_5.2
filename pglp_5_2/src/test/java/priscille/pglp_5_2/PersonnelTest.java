@@ -25,7 +25,7 @@ public class PersonnelTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	public void testSerialization() throws ClassNotFoundException {
 		ArrayList<String> numTel = new ArrayList<String>();
     	numTel.add("0123456789");
     	numTel.add("0987654321");
@@ -35,5 +35,11 @@ public class PersonnelTest {
         File f = new File("personnel1");
         f.delete();
         assertTrue(p.getNom().equalsIgnoreCase(p2.getNom()) && p.getPrenom().equals(p2.getPrenom()) && p.getDateNaissance().isEqual(p2.getDateNaissance())  && p.getNumTel().containsAll(p2.getNumTel()));
+	}
+	
+	@Test
+	public void testDeSerialization() throws ClassNotFoundException {
+		@SuppressWarnings("unused")
+		Personnel p = Personnel.deSerialization("aaa");
 	}
 }

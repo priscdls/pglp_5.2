@@ -140,7 +140,7 @@ public class AfficheParGroupeDaoTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	public void testSerialization() throws ClassNotFoundException {
 		AfficheParGroupeDao apgDao = new AfficheParGroupeDao();
 		CompositePersonnel c1 = new CompositePersonnel();
     	CompositePersonnel c2 = new CompositePersonnel();
@@ -168,5 +168,11 @@ public class AfficheParGroupeDaoTest {
         f.delete();
         
         assertEquals(apgDao.getAll().toString(), apg2.getAll().toString());
+	}
+	
+	@Test
+	public void testDeSerialization() throws ClassNotFoundException {
+        @SuppressWarnings("unused")
+		AfficheParGroupeDao apg = AfficheParGroupeDao.deSerialization("aaa");
 	}
 }

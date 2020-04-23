@@ -26,7 +26,7 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
     /**
      * Identifiant d'un composite.
      */
-    private int id;
+    private final int id;
     /**
      * Identifiant du composite suivant.
      */
@@ -37,13 +37,6 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
      */
     public final int getId() {
         return this.id;
-    }
-    /**
-     * Setter de l'identifiant du composite.
-     * @param i L'identifiant modifié
-     */
-    public void setId(final int i) {
-        this.id = i;
     }
     /**
      * Getter de la liste.
@@ -131,8 +124,10 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
      * Fonction de désérialisation.
      * @param path Adresse du fichier
      * @return Le composite deserialisé
+     * @throws ClassNotFoundException
      */
-    public static CompositePersonnel deSerialization(final String path) {
+    public static CompositePersonnel deSerialization(final String path)
+            throws ClassNotFoundException {
         ObjectInputStream ois = null;
         CompositePersonnel cp = null;
         try {
@@ -140,8 +135,6 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
             ois = new ObjectInputStream(fichierIn);
             cp = (CompositePersonnel) ois.readObject();
         } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {

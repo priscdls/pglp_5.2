@@ -4,13 +4,15 @@ import java.sql.Connection;
 
 public class FactoryDaoJDBC extends AbstractFactoryDao {
     /**
-     * Constructeur.
-     * @param c Le connecteur
+     * Connecteur a la base de données.
      */
-    @SuppressWarnings("static-access")
-    public FactoryDaoJDBC(final Connection c) {
-        super.connect = c;
-    }
+	private static Connection connect;
+	/**
+	 * Constructeur.
+	 */
+	public FactoryDaoJDBC(final Connection c) {
+		connect = c;
+	}
     /**
      * Fabrique Dao pour Personnel.
      * @return un nouveau PersonnelDao
