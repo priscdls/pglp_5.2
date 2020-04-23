@@ -77,7 +77,8 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
         prepare.executeUpdate();
     }
     /**
-     * Supprime une association entre un personnel et un compositePersonnel.
+     * Supprime toutes les associations d'un personnel donné
+     * avec des composites.
      * @param idP L'identifiant du personnel.
      * @throws SQLException
      */

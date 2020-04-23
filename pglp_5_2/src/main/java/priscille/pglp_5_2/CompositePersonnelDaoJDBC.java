@@ -52,9 +52,9 @@ extends AbstractDao<CompositePersonnel> {
         prepare.executeUpdate();
     }
     /**
-     * Recherche une association entre 2 composites.
+     * Recherche les associations entre un composite donné et des composites.
      * @param idCp L'identifiant du composite cherché
-     * @return 
+     * @return La listes de ses associations
      * @throws SQLException
      */
     private ArrayList<InterfacePersonnel> findGroupeComposite(
@@ -72,9 +72,9 @@ extends AbstractDao<CompositePersonnel> {
         return list;
     }
    /**
-    * Recherche une association entre un composite et un personnel.
+    * Recherche les associations entre un composite donné et des personnels.
     * @param idCp L'identifiant du composite cherché
-    * @return
+    * @return La listes de ses associations
     * @throws SQLException
     */
     @SuppressWarnings("static-access")
@@ -99,9 +99,9 @@ extends AbstractDao<CompositePersonnel> {
         return list;
     }
     /**
-     * Recherche les associations entre un composite donné et des personnels.
+     * Recherche les associations d'un composite donné.
      * @param idCp L'identifiant du composite
-     * @return
+     * @return La listes de ses associations
      * @throws SQLException
      */
     private ArrayList<InterfacePersonnel> findGroupePersonnelComposite(
@@ -130,7 +130,7 @@ extends AbstractDao<CompositePersonnel> {
         prepare2.executeUpdate();
     }
     /**
-     * Ajoute un CompositePersonnel de type composite ou personnel.
+     * Ajoute un CompositePersonnel.
      * @param cpers Le composite a ajouter
      */
     @SuppressWarnings("static-access")
