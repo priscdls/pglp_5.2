@@ -18,7 +18,7 @@ public final class App {
     /**
      * Début du programme.
      * @param args Les arguments donnés au démarrage de l'application
-     * @throws SQLException 
+     * @throws SQLException
      */
     @SuppressWarnings("static-access")
     public static void main(final String[] args) throws SQLException {
@@ -44,12 +44,13 @@ public final class App {
         c1.add(p1);
         c2.add(c3);
         c2.add(p2);
-        
         Connection connect = DataBase.createBase();
         DataBase.deleteAllTables(connect);
         DataBase.createAllTables(connect);
-        FactoryDaoJDBC factory = (FactoryDaoJDBC) AbstractFactoryDao.getFactory(DaoType.JDBC);
-        AbstractDao<CompositePersonnel> daoCp = factory.getCompositePersonnelDao();
+        FactoryDaoJDBC factory = (FactoryDaoJDBC)
+                AbstractFactoryDao.getFactory(DaoType.JDBC);
+        AbstractDao<CompositePersonnel> daoCp =
+                factory.getCompositePersonnelDao();
         AbstractDao<Personnel> daoPers = factory.getPersonnelDao();
         daoCp.create(c1);
         ArrayList<String> numTel2 = new ArrayList<String>();

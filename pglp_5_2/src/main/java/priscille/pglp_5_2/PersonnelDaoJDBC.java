@@ -16,7 +16,14 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
     public PersonnelDaoJDBC(final Connection c) {
         super(c);
     }
-    private void createNumTel(final String numTel, final int idP) throws SQLException {
+    /**
+     * Cree des numeros de telephone a un personnel.
+     * @param numTel La liste des numeros de tel du personnel
+     * @param idP L'identifiant du personnel
+     * @throws SQLException
+     */
+    private void createNumTel(final String numTel, final int idP)
+            throws SQLException {
         final int un = 1;
         final int deux = 2;
         PreparedStatement prepare = connect.prepareStatement(
@@ -26,7 +33,12 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
         prepare.setInt(deux, idP);
         prepare.executeUpdate();
     }
-    
+    /**
+     * Trouve le(s) numero(s) de telephone du personnel indiqué.
+     * @param idP L'identifiant du personnel.
+     * @return La liste des numeros de tel du personnel
+     * @throws SQLException
+     */
     private ArrayList<String> findNumTel(final int idP) throws SQLException {
         final int un = 1;
         ArrayList<String> numTel = new ArrayList<String>();
@@ -39,14 +51,24 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
         }
         return numTel;
     }
-    
-    private void updateNumTel(final int idP, ArrayList<String> numTel) throws SQLException {
+    /**
+     * Modifie le(s) numero(s) de telephone du personnel indiqué.
+     * @param idP L'identifiant du personnel.
+     * @param numTel La liste des numeros de tel du personnel
+     * @throws SQLException
+     */
+    private void updateNumTel(final int idP, final ArrayList<String> numTel)
+            throws SQLException {
         deleteAllNumTel(idP);
         for (String num : numTel) {
             createNumTel(num, idP);
         }
     }
-    
+    /**
+     * Supprime les numeros de telephone du personnel indiqué.
+     * @param idP L'identifiant du personnel.
+     * @throws SQLException
+     */
     private void deleteAllNumTel(final int idP) throws SQLException {
         final int un = 1;
         PreparedStatement prepare = connect.prepareStatement(
@@ -54,7 +76,12 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
         prepare.setInt(un, idP);
         prepare.executeUpdate();
     }
-    private void deleteGroupePersonnel(int idP) throws SQLException {
+    /**
+     * Supprime une association entre un personnel et un compositePersonnel.
+     * @param idP L'identifiant du personnel.
+     * @throws SQLException
+     */
+    private void deleteGroupePersonnel(final int idP) throws SQLException {
         final int un = 1;
         PreparedStatement prepare = connect.prepareStatement(
                 "DELETE FROM GroupePersonnel WHERE IdP = ?");
@@ -107,7 +134,7 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
             prepare.setInt(un, id);
             ResultSet result = prepare.executeQuery();
             if (result.next()) {
-                LocalDate date = 
+                LocalDate date =
                         result.getDate("DateNaissance").toLocalDate();
                 p = new Personnel.Builder(
                         result.getString("Nom"),
@@ -163,7 +190,7 @@ public class PersonnelDaoJDBC extends AbstractDao<Personnel> {
      */
     @Override
     public void delete(final Personnel pers) {
-    	final int un = 1;
+        final int un = 1;
         try {
             this.deleteGroupePersonnel(pers.getId());
             this.deleteAllNumTel(pers.getId());

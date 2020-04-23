@@ -6,12 +6,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public abstract class DataBase {
-    
+    /**
+     * Création de la base de données.
+     * @return Le connecteur a la base
+     * @throws SQLException
+     */
     public static Connection createBase() throws SQLException {
-        return DriverManager.getConnection("jdbc:derby:DataPersonnel;create=true");
+        return DriverManager.getConnection(
+                "jdbc:derby:DataPersonnel;create=true");
     }
-    
-    public static void deleteAllTables(final Connection connect) throws SQLException {
+    /**
+     * Supprime toutes les tables de la base de données.
+     * @param connect Le connecteur a la base
+     * @throws SQLException
+     */
+    public static void deleteAllTables(final Connection connect)
+            throws SQLException {
         Statement s = null;
         s = connect.createStatement();
         try {
@@ -35,8 +45,13 @@ public abstract class DataBase {
         } catch (SQLException e) {
         }
     }
-    
-    public static void createAllTables(final Connection connect) throws SQLException {
+    /**
+     * Création de toutes les tables de la base de données.
+     * @param connect Le connecteur a la base
+     * @throws SQLException
+     */
+    public static void createAllTables(final Connection connect)
+            throws SQLException {
         String pers = "CREATE TABLE Personnel ("
                 + "Id int,"
                 + "Nom varchar(30),"

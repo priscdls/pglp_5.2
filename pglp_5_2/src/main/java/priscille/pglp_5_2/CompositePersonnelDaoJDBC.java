@@ -17,7 +17,14 @@ extends AbstractDao<CompositePersonnel> {
     public CompositePersonnelDaoJDBC(final Connection c) {
         super(c);
     }
-    private void createGroupeComposite(final int idCp, final int idCp2) throws SQLException {
+    /**
+     * Cree une association entre deux compositePersonnel.
+     * @param idCp L'identifiant du composite qui contient le second
+     * @param idCp2 L'identifiant du composite qui est contenu
+     * @throws SQLException
+     */
+    private void createGroupeComposite(final int idCp, final int idCp2)
+            throws SQLException {
         final int un = 1;
         final int deux = 2;
         PreparedStatement prepare = connect.prepareStatement(
@@ -27,7 +34,14 @@ extends AbstractDao<CompositePersonnel> {
         prepare.setInt(deux, idCp2);
         prepare.executeUpdate();
     }
-    private void createGroupePersonnel(final int idCp, final int idP) throws SQLException {
+    /**
+     * Cree une association entre un compositePersonnel et un personnel.
+     * @param idCp L'identifiant du composite
+     * @param idP L'identifiant du personnel
+     * @throws SQLException
+     */
+    private void createGroupePersonnel(final int idCp, final int idP)
+            throws SQLException {
         final int un = 1;
         final int deux = 2;
         PreparedStatement prepare = connect.prepareStatement(
@@ -37,8 +51,16 @@ extends AbstractDao<CompositePersonnel> {
         prepare.setInt(deux, idP);
         prepare.executeUpdate();
     }
-    private ArrayList<InterfacePersonnel> findGroupeComposite(final int idCp) throws SQLException {
-        ArrayList<InterfacePersonnel> list = new ArrayList<InterfacePersonnel>();
+    /**
+     * Recherche une association entre 2 composites.
+     * @param idCp L'identifiant du composite cherché
+     * @return 
+     * @throws SQLException
+     */
+    private ArrayList<InterfacePersonnel> findGroupeComposite(
+            final int idCp) throws SQLException {
+        ArrayList<InterfacePersonnel> list
+        = new ArrayList<InterfacePersonnel>();
         PreparedStatement prepare = connect.prepareStatement(
                 "SELECT IdCp2 FROM GroupeComposite "
                 + "WHERE IdCp = ?");
@@ -49,16 +71,25 @@ extends AbstractDao<CompositePersonnel> {
         }
         return list;
     }
+   /**
+    * Recherche une association entre un composite et un personnel.
+    * @param idCp L'identifiant du composite cherché
+    * @return
+    * @throws SQLException
+    */
     @SuppressWarnings("static-access")
-    private ArrayList<InterfacePersonnel> findGroupePersonnel(final int idCp) throws SQLException {
-        ArrayList<InterfacePersonnel> list = new ArrayList<InterfacePersonnel>();
+    private ArrayList<InterfacePersonnel> findGroupePersonnel(
+            final int idCp) throws SQLException {
+        ArrayList<InterfacePersonnel> list
+        = new ArrayList<InterfacePersonnel>();
         PreparedStatement prepare = connect.prepareStatement(
                 "SELECT IdP FROM GroupePersonnel "
                 + "WHERE IdCp = ?");
         prepare.setInt(1, idCp);
         ResultSet result = prepare.executeQuery();
         while (result.next()) {
-            FactoryDaoJDBC factory = (FactoryDaoJDBC) AbstractFactoryDao.getFactory(DaoType.JDBC);
+            FactoryDaoJDBC factory = (FactoryDaoJDBC)
+                    AbstractFactoryDao.getFactory(DaoType.JDBC);
             AbstractDao<Personnel> daoPers = factory.getPersonnelDao();
             Personnel p = daoPers.find(result.getInt("IdP"));
             if (p != null) {
@@ -67,7 +98,14 @@ extends AbstractDao<CompositePersonnel> {
         }
         return list;
     }
-    private ArrayList<InterfacePersonnel> findGroupePersonnelComposite(final int idCp) throws SQLException {
+    /**
+     * Recherche les associations entre un composite donné et des personnels.
+     * @param idCp L'identifiant du composite
+     * @return
+     * @throws SQLException
+     */
+    private ArrayList<InterfacePersonnel> findGroupePersonnelComposite(
+            final int idCp) throws SQLException {
         ArrayList<InterfacePersonnel> list = findGroupeComposite(idCp);
         ArrayList<InterfacePersonnel> list2 = findGroupePersonnel(idCp);
         for (InterfacePersonnel ip : list2) {
@@ -75,7 +113,13 @@ extends AbstractDao<CompositePersonnel> {
         }
         return list;
     }
-    private void deleteGroupePersonnelComposite(final int idCp) throws SQLException {
+    /**
+     * Supprime toutes les associations d'un composite.
+     * @param idCp L'identifiant du composite
+     * @throws SQLException
+     */
+    private void deleteGroupePersonnelComposite(final int idCp)
+            throws SQLException {
         PreparedStatement prepare = connect.prepareStatement(
                 "DELETE FROM GroupePersonnel WHERE IdCp = ?");
         prepare.setInt(1, idCp);
@@ -101,23 +145,23 @@ extends AbstractDao<CompositePersonnel> {
             int result = prepare.executeUpdate();
             assert result == un;
             for (InterfacePersonnel ip : cpers.getList()) {
-            	if (ip.getClass() == CompositePersonnel.class) {
-            	    CompositePersonnel cp = (CompositePersonnel) ip;
-            	    if (this.find(cp.getId()) == null) {
-            	        this.create(cp);
-            	    }
+                if (ip.getClass() == CompositePersonnel.class) {
+                    CompositePersonnel cp = (CompositePersonnel) ip;
+                    if (this.find(cp.getId()) == null) {
+                        this.create(cp);
+                    }
                     this.createGroupeComposite(cpers.getId(), cp.getId());
                 } else {
-                    FactoryDaoJDBC factory = (FactoryDaoJDBC) AbstractFactoryDao.getFactory(DaoType.JDBC);
+                    FactoryDaoJDBC factory = (FactoryDaoJDBC)
+                            AbstractFactoryDao.getFactory(DaoType.JDBC);
                     AbstractDao<Personnel> daoPers = factory.getPersonnelDao();
                     Personnel pers = (Personnel) ip;
                     if (daoPers.find(pers.getId()) == null) {
                         daoPers.create(pers);
                     }
                     this.createGroupePersonnel(cpers.getId(), pers.getId());
-                    
                 }
-            } 
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             this.delete(cpers);
@@ -140,7 +184,8 @@ extends AbstractDao<CompositePersonnel> {
             if (result.next()) {
                 cp = new CompositePersonnel();
                 cp.setId(id);
-                ArrayList<InterfacePersonnel> liste = this.findGroupePersonnelComposite(id);
+                ArrayList<InterfacePersonnel> liste
+                = this.findGroupePersonnelComposite(id);
                 for (InterfacePersonnel ip : liste) {
                     cp.add(ip);
                 }
@@ -161,7 +206,7 @@ extends AbstractDao<CompositePersonnel> {
         if (save != null) {
             this.delete(save);
             this.create(cpers);
-            if(this.find(cpers.getId()) == null) {
+            if (this.find(cpers.getId()) == null) {
                 this.create(save);
             }
             return cpers;
@@ -173,7 +218,6 @@ extends AbstractDao<CompositePersonnel> {
      * Retire un CompositePersonnel.
      * @param cpers Le composite a retirer
      */
-    @SuppressWarnings("static-access")
     @Override
     public void delete(final CompositePersonnel cpers) {
         try {

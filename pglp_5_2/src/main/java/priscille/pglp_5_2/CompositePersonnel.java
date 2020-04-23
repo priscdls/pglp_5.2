@@ -38,6 +38,10 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
     public final int getId() {
         return this.id;
     }
+    /**
+     * Setter de l'identifiant du composite.
+     * @param identifiant L'identifiant du composite a modifier
+     */
     public void setId(final int identifiant) {
         this.id = identifiant;
     }

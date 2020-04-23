@@ -6,13 +6,14 @@ public class FactoryDaoJDBC extends AbstractFactoryDao {
     /**
      * Connecteur a la base de données.
      */
-	private static Connection connect;
-	/**
-	 * Constructeur.
-	 */
-	public FactoryDaoJDBC(final Connection c) {
-		connect = c;
-	}
+    private static Connection connect;
+    /**
+     * Constructeur.
+     * @param c Le connecteur a la base de donnees
+     */
+    public FactoryDaoJDBC(final Connection c) {
+        connect = c;
+    }
     /**
      * Fabrique Dao pour Personnel.
      * @return un nouveau PersonnelDao
