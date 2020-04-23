@@ -23,12 +23,6 @@ public class FactoryDaoTest {
     }
 	
 	@Test
-    public void testAfficheParGroupeDao() {
-        Dao<AfficheParGroupe> dao = FactoryDao.getAfficheParGroupeDao();
-        assertTrue(dao.getAll().isEmpty());
-    }
-	
-	@Test
     public void testPersonnelDaoExistant() throws ClassNotFoundException {
 		ArrayList<String> numTel = new ArrayList<String>();
         PersonnelDao persDao = (PersonnelDao) FactoryDao.getPersonnelDao();
@@ -62,28 +56,5 @@ public class FactoryDaoTest {
         File f = new File("CpersDao");
         f.delete();
         assertEquals(CpersDao1.getAll().toString(),CpersDao2.getAll().toString());
-	}
-	
-	@Test
-    public void testAfficheParGroupeExistant() throws ClassNotFoundException {
-		AfficheParGroupeDao apgDao = (AfficheParGroupeDao) FactoryDao.getAfficheParGroupeDao();
-		AfficheParGroupe apg = new AfficheParGroupe();
-        CompositePersonnel cp = new CompositePersonnel();
-        ArrayList<String> numTel = new ArrayList<String>();
-    	numTel.add("0123456789");
-    	numTel.add("0987654321");
-        Personnel p = new Personnel.Builder("Daoulas", "Priscille", LocalDate.of(1996, 05, 23), numTel).build();
-        cp.add(p);
-        apg.add(cp);
-        apg.parcoursLargeur(cp);
-        apgDao.ajouter(apg);
-        apgDao.serialization("apgDao");
-		AfficheParGroupeDao apgDao1 = (AfficheParGroupeDao) FactoryDao.getAfficheParGroupeDao("apgDao");
-
-        
-        AfficheParGroupeDao apgDao2 = AfficheParGroupeDao.deSerialization("apgDao");
-        File f = new File("apgDao");
-        f.delete();
-        assertEquals(apgDao1.getAll().toString(),apgDao2.getAll().toString());
 	}
 }

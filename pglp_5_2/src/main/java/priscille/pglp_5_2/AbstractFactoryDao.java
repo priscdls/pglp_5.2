@@ -1,7 +1,6 @@
 package priscille.pglp_5_2;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public abstract class AbstractFactoryDao {
@@ -22,14 +21,10 @@ public abstract class AbstractFactoryDao {
      * Fabrique général de Dao.
      * @param type Type de Dao
      * @return Une fabrique de Dao
+     * @throws SQLException 
      */
-    public static AbstractFactoryDao getFactory(final DaoType type) {
-    	Connection connect = null;
-    	try {
-            connect = DriverManager.getConnection("jdbc:derby:compositePattern;create=false");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static Object getFactory(final DaoType type) throws SQLException {
+    	Connection connect = DataBase.createBase();
     	if (type == DaoType.CRUD) {
             return new FactoryDao();
         }

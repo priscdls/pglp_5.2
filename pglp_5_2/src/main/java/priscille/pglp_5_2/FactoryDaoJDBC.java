@@ -27,11 +27,4 @@ public class FactoryDaoJDBC extends AbstractFactoryDao {
     public static AbstractDao<CompositePersonnel> getCompositePersonnelDao() {
         return new CompositePersonnelDaoJDBC(connect);
     }
-    /**
-     * Fabrique Dao pour AfficheParGroupe.
-     * @return un nouvel AfficheParGroupeDao
-     */
-    public static AbstractDao<AfficheParGroupe> getAfficheParGroupeDao() {
-        return new AfficheParGroupeDaoJDBC(connect);
-    }
 }

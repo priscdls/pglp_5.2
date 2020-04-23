@@ -19,7 +19,7 @@ public final class Personnel implements InterfacePersonnel, Serializable {
     /**
      * Identifiant d'un personnel.
      */
-    private final int id;
+    private int id;
     /**
      * Identifiant du composite suivant.
      */
@@ -46,6 +46,9 @@ public final class Personnel implements InterfacePersonnel, Serializable {
      */
     public int getId() {
         return this.id;
+    }
+    public void setId(final int identifiant) {
+        this.id = identifiant;
     }
     /**
      * Getter de nom.
@@ -111,7 +114,11 @@ public final class Personnel implements InterfacePersonnel, Serializable {
             this.nom = n;
             this.prenom = p;
             this.dateNaissance = date;
-            this.numTel = num;
+            if (num != null) {
+                this.numTel = num;
+            } else {
+                this.numTel = new ArrayList<String>();
+            }
         }
         /**
          * Fonction qui construit une variable
