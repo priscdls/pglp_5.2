@@ -26,7 +26,7 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
     /**
      * Identifiant d'un composite.
      */
-    private final int id;
+    private int id;
     /**
      * Identifiant du composite suivant.
      */
@@ -37,6 +37,9 @@ implements InterfacePersonnel, Iterable<InterfacePersonnel>, Serializable {
      */
     public final int getId() {
         return this.id;
+    }
+    public void setId(final int identifiant) {
+        this.id = identifiant;
     }
     /**
      * Getter de la liste.
