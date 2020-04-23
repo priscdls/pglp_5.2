@@ -11,7 +11,7 @@ import org.junit.Test;
  * Tests unitaires de la classe AffichageParGroupe.
  *
  */
-public class AffichageParGroupeTest {
+public class AfficheParGroupeTest {
 	/**
 	 * Test
 	 */
